@@ -16,9 +16,11 @@ function getTimeLeft() {
 }
 
 export default function Countdown() {
+  const [isMounted, setIsMounted] = useState(false);
   const [time, setTime] = useState(getTimeLeft);
 
   useEffect(() => {
+    setIsMounted(true);
     const id = setInterval(() => setTime(getTimeLeft()), 1000);
     return () => clearInterval(id);
   }, []);
@@ -36,7 +38,7 @@ export default function Countdown() {
         <div key={label} className="flex items-center gap-3">
           <div className="text-center">
             <div className="text-3xl md:text-5xl font-mono font-bold text-amber-400 bg-white/10 rounded-xl px-4 py-3 min-w-[72px] text-center">
-              {String(value).padStart(2, "0")}
+              {isMounted ? String(value).padStart(2, "0") : "--"}
             </div>
             <div className="text-xs text-gray-400 mt-2 tracking-widest">{label}</div>
           </div>
