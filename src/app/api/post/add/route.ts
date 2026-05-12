@@ -14,7 +14,7 @@ export const POST = withApiHandler(async (request: NextRequest) => {
       { status: 400 },
     );
   }
-  const client = await clientPromise;
+  const client = await clientPromise();
   const db = client.db(DB_NAME);
   const collection = db.collection("posts");
   const result = await collection.insertOne({

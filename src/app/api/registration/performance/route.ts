@@ -9,7 +9,7 @@ const DB = "guitar_club";
 const COLLECTION = "performance_registrations";
 
 export const GET = withApiHandler(async () => {
-  const client = await clientPromise;
+  const client = await clientPromise();
   const db = client.db(DB);
   const list = await db
     .collection(COLLECTION)
@@ -41,7 +41,7 @@ export const POST = withApiHandler(async (request: NextRequest) => {
     createdAt: Date.now(),
   };
 
-  const client = await clientPromise;
+  const client = await clientPromise();
   const db = client.db(DB);
   await db.collection(COLLECTION).insertOne(doc);
   return Response.json(success(doc), { status: 200 });

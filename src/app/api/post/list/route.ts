@@ -11,7 +11,7 @@ export const GET = withApiHandler(async (request: NextRequest) => {
 
   const skip = (Number(page) - 1) * Number(limit);
 
-  const client = await clientPromise;
+  const client = await clientPromise();
   const db = client.db(DB_NAME);
   const collection = db.collection("posts");
   const total = await collection.countDocuments();
