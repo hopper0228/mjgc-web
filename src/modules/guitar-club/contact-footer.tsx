@@ -50,8 +50,8 @@ export default function ContactFooter() {
             <a
               key={c.label}
               href={c.href}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              target={c.href?.startsWith("http") ? "_blank" : undefined}
+              rel={c.href?.startsWith("http") ? "noopener noreferrer" : undefined}
               className="flex flex-col items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-6 hover:border-amber-400/30 hover:bg-white/[0.08] transition-all duration-300 text-center"
             >
               <span className="text-3xl">{c.icon}</span>

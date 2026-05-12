@@ -40,8 +40,8 @@ export default function Forms() {
               <p className="text-gray-400 text-sm leading-relaxed flex-1 mb-8">{form.desc}</p>
               <a
                 href={form.link}
-                target={form.link.startsWith("http") ? "_blank" : undefined}
-                rel={form.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                target={form.link?.startsWith("http") ? "_blank" : undefined}
+                rel={form.link?.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-3 rounded-lg transition-all duration-200 hover:scale-105"
               >
                 {form.linkText} →
