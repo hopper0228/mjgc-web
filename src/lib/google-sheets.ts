@@ -1,35 +1,47 @@
 /**
- * Google Sheets API v4 (public read-only via API key)
+ * Google Sheets API v4 (Service Account 驗證)
  *
  * 使用前請確認：
- * 1. Google Cloud Console 建立 API key，啟用 Google Sheets API
- * 2. 將表單回覆的 Google Sheets 設為「知道連結的人皆可檢視」
- * 3. 在 .env.local 填入以下環境變數：
- *    GOOGLE_SHEETS_API_KEY=...
- *    PERFORMANCE_SHEET_ID=...  (試算表網址中 /d/ 後面那段)
- *    ACTIVITY_SHEET_ID=...
+ * 1. Google Cloud Console 建立 Service Account，啟用 Google Sheets API
+ * 2. 下載 Service Account 的 JSON 金鑰
+ * 3. 將試算表「共用」給 Service Account 的 email（檢視者即可）
+ * 4. 在 .env.local 填入以下環境變數：
+ *    GOOGLE_SERVICE_ACCOUNT_EMAIL=xxx@project-id.iam.gserviceaccount.com
+ *    GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+ *    PERFORMANCE_FORM_SHEET_ID=...
+ *    ACTIVITY_FORM_SHEET_ID=...
  */
 
-const API_KEY = process.env.GOOGLE_SHEETS_API_KEY;
+import { google } from "googleapis";
+
+function getAuth() {
+  return new google.auth.JWT({
+    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+  });
+}
 
 export type SheetRow = Record<string, string>;
 
 /**
- * 讀取指定 Sheet 的所有資料，第一列視為欄位名稱
+ * 讀取指定試算表的所有資料，第一列視為欄位名稱
  */
 export async function fetchSheetRows(
   spreadsheetId: string,
   range = "A:Z"
 ): Promise<SheetRow[]> {
-  if (!API_KEY || !spreadsheetId) return [];
+  if (!spreadsheetId) return [];
 
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}/values/${range}?key=${API_KEY}`;
-  const res = await fetch(url, { next: { revalidate: 60 } }); // 每 60 秒重新驗證
+  const auth = getAuth();
+  const sheets = google.sheets({ version: "v4", auth });
 
-  if (!res.ok) return [];
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range,
+  });
 
-  const json = await res.json();
-  const rows: string[][] = json.values ?? [];
+  const rows: string[][] = res.data.values ?? [];
   if (rows.length < 2) return [];
 
   const [headers, ...dataRows] = rows;

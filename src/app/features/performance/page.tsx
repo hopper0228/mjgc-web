@@ -2,13 +2,15 @@ import FeaturePageLayout from "@/modules/guitar-club/feature-page-layout";
 import { fetchSheetRows, SheetRow } from "@/lib/google-sheets";
 
 async function getPerformances(): Promise<SheetRow[]> {
-  return fetchSheetRows(process.env.PERFORMANCE_SHEET_ID ?? "");
+  return fetchSheetRows(process.env.PERFORMANCE_FORM_SHEET_ID ?? "");
 }
 
-const isConfigured =
-  !!process.env.GOOGLE_SHEETS_API_KEY && !!process.env.PERFORMANCE_SHEET_ID;
-
 export default async function PerformancePage() {
+  const isConfigured =
+    !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
+    !!process.env.GOOGLE_PRIVATE_KEY &&
+    !!process.env.PERFORMANCE_FORM_SHEET_ID;
+
   const rows = isConfigured ? await getPerformances() : [];
   const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
 
@@ -51,11 +53,12 @@ export default async function PerformancePage() {
 
           {!isConfigured ? (
             <div className="border border-dashed border-white/20 rounded-2xl p-12 text-center space-y-3">
-              <p className="text-gray-400 text-sm font-medium">尚未設定 Google Sheets 連線</p>
+              <p className="text-gray-400 text-sm font-medium">尚未設定 Google 表單回覆連線</p>
               <p className="text-gray-600 text-xs leading-relaxed">
                 請在 .env.local 填入以下變數：<br />
-                <code className="text-amber-400/70">GOOGLE_SHEETS_API_KEY</code>、
-                <code className="text-amber-400/70">PERFORMANCE_SHEET_ID</code>
+                <code className="text-amber-400/70">GOOGLE_SERVICE_ACCOUNT_EMAIL</code>、
+                <code className="text-amber-400/70">GOOGLE_PRIVATE_KEY</code>、
+                <code className="text-amber-400/70">PERFORMANCE_FORM_SHEET_ID</code>
               </p>
             </div>
           ) : rows.length === 0 ? (
