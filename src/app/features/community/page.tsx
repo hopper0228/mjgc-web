@@ -8,7 +8,7 @@ async function getRegistrations(): Promise<SheetRow[]> {
 export default async function CommunityPage() {
   const isConfigured =
     !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
-    !!process.env.GOOGLE_PRIVATE_KEY &&
+    !!process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n") &&
     !!process.env.ACTIVITY_FORM_SHEET_ID;
 
   const rows = isConfigured ? await getRegistrations() : [];
