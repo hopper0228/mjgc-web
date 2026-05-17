@@ -10,7 +10,7 @@ export default function Hero() {
           src="/images/沐榕完稿.jpg"
           alt="活動背景"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-40"
           sizes="100vw"
           priority
         />
