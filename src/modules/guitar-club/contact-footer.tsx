@@ -71,10 +71,11 @@ export default function ContactFooter() {
               <div className="flex items-center gap-3 mb-4">
                 <div className="relative w-10 h-10 rounded-full overflow-hidden border border-amber-400/30 flex-shrink-0">
                   <Image
-                    src="https://static.readdy.ai/image/abc124db86a99a040d4212ba1ee4392b/623eeeea97d6d33bc8c88708f880985e.jpeg"
+                    src="/images/沐榕完稿.jpg"
                     alt="Logo"
                     fill
                     className="object-cover"
+                    sizes="40px"
                   />
                 </div>
                 <span className="text-white font-bold">第三屆沐榕回娘家</span>

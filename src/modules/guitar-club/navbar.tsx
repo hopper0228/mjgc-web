@@ -21,10 +21,11 @@ export default function Navbar() {
         <a href="#" className="flex items-center gap-3">
           <div className="relative w-9 h-9 rounded-full overflow-hidden border border-amber-400/30 flex-shrink-0">
             <Image
-              src="https://static.readdy.ai/image/abc124db86a99a040d4212ba1ee4392b/623eeeea97d6d33bc8c88708f880985e.jpeg"
+              src="/images/沐榕完稿.jpg"
               alt="沐榕回娘家"
               fill
               className="object-cover"
+              sizes="36px"
             />
           </div>
           <span className="text-white font-semibold text-base hidden sm:block">

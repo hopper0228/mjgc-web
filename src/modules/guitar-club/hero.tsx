@@ -7,10 +7,11 @@ export default function Hero() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="https://static.readdy.ai/image/abc124db86a99a040d4212ba1ee4392b/623eeeea97d6d33bc8c88708f880985e.jpeg"
+          src="/images/沐榕完稿.jpg"
           alt="活動背景"
           fill
           className="object-cover opacity-20"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0a0a0f]" />
