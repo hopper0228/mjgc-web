@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link"; // 1. 新增引入 Link
 
 const NAV_LINKS = [
   { label: "活動資訊", href: "#about" },
@@ -104,7 +105,12 @@ export default function ContactFooter() {
 
             {/* Contact Info */}
             <div>
-              <h4 className="text-white font-semibold mb-4">聯絡資訊</h4>
+              <h4 className="text-white font-semibold mb-4">
+                {/* 2. 將聯絡資訊包裝成隱藏連結，加上 cursor-default 隱藏點擊手勢 */}
+                <Link href="/developer" className="cursor-default">
+                  聯絡資訊
+                </Link>
+              </h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>📞 0911-456-739</li>
                 <li>💬 LINE: @rtu1096v</li>
