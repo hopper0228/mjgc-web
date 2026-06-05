@@ -20,7 +20,7 @@ export default function Hero() {
             並透過 Tailwind 的 w-full h-auto 讓它在前端畫面完美隨視窗縮放。
           */}
           <Image
-            src="/images/沐榕完稿.jpg"
+            src="/images/沐榕回娘家.jpg"
             alt="沐榕回娘家"
             width={1920} // 請依據原圖的大致寬度填寫
             height={1080} // 請依據原圖的大致高度填寫
