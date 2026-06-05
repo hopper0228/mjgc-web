@@ -1,73 +1,66 @@
-import Image from "next/image";
-import Countdown from "./countdown";
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Hero() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#faf9f6]">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/沐榕回娘家.jpg"
-          alt="活動背景"
-          fill
-          className="object-cover" 
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-          sizes="100vw"
-          priority
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pt-20">
-        <p className="text-[#6B4B30] font-bold tracking-[0.3em] text-xs uppercase mb-6 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-          2026年8月22日（星期六）· 典空間 活動會場
-        </p>
-
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-2 text-[#4A3219] drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
-          第三屆
-        </h1>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-10 text-[#4A3219] drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
-          沐榕回娘家
-        </h1>
-
-        <p className="text-[#6B4B30] font-bold text-sm tracking-widest mb-6 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-          距離活動開始
-        </p>
-        
-        <Countdown />
-
-        <div className="flex flex-wrap gap-4 justify-center mt-10">
-          <a
-            href="#forms"
-            className="bg-[#4A3219] hover:bg-[#3A2612] text-white font-bold px-8 py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-md"
-          >
-            立即報名
-          </a>
-          <a
-            href="#about"
-            className="border-2 border-[#4A3219] bg-white/30 backdrop-blur-sm hover:bg-[#4A3219] text-[#4A3219] hover:text-white font-bold px-8 py-3 rounded-lg transition-all duration-200 shadow-sm"
-          >
-            向下探索 ↓
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg
-          className="w-6 h-6 text-[#4A3219]/70"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+    <>
+      {/* 1. 移除固定高度 h-[...], 讓高度由圖片自然撐開
+        2. mt-16 確保整體推到導覽列下方
+      */}
+      <section className="relative w-full mt-16 bg-gray-900 flex items-center justify-center overflow-hidden">
+        <div 
+          className="relative w-full cursor-pointer hover:opacity-95 transition-opacity"
+          onClick={() => setIsOpen(true)}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
+          {/* 不使用 fill。設定 width 與 height 作為原始比例基準（例如 1920x1080），
+            並透過 Tailwind 的 w-full h-auto 讓它在前端畫面完美隨視窗縮放。
+          */}
+          <Image
+            src="/images/沐榕完稿.jpg"
+            alt="沐榕回娘家"
+            width={1920} // 請依據原圖的大致寬度填寫
+            height={1080} // 請依據原圖的大致高度填寫
+            priority
+            className="w-full h-auto object-contain"
           />
-        </svg>
-      </div>
-    </section>
+          
+          {/* 提示字條 */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm pointer-events-none z-10">
+            點擊圖片查看完整大圖
+          </div>
+        </div>
+      </section>
+
+      {/* 完整圖片查看功能 (Modal 燈箱) */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out"
+          onClick={() => setIsOpen(false)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-gray-300 z-[110] p-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
+          >
+            ✕
+          </button>
+
+          <div className="relative w-[95vw] h-[95vh]">
+            <Image
+              src="/images/沐榕完稿.jpg"
+              alt="沐榕回娘家 完整圖"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -33,22 +33,22 @@ export default function Countdown() {
   ];
 
   return (
-    <div className="flex gap-3 justify-center flex-wrap">
+    <div className="flex gap-2 md:gap-4 justify-center flex-wrap">
       {units.map(({ value, label }, i) => (
-        <div key={label} className="flex items-center gap-3">
-          <div className="text-center">
-            {/* 數字改為 text-amber-600，與主標題同色，背景改為配合方案一的樣式 */}
-            <div className="text-3xl md:text-5xl font-mono font-bold text-amber-600 bg-white/50 backdrop-blur-md border border-slate-200 shadow-sm rounded-xl px-4 py-3 min-w-[72px] text-center">
+        <div key={label} className="flex items-center gap-2 md:gap-4">
+          <div className="text-center flex flex-col items-center">
+            {/* 數字區塊：配合深色主題，改為半透明微白背景 (bg-white/10)，數字使用亮琥珀色 (amber-400) */}
+            <div className="text-4xl md:text-6xl font-mono font-bold text-amber-400 bg-white/10 border border-white/20 rounded-xl px-3 py-4 md:px-5 md:py-4 min-w-[72px] md:min-w-[96px] text-center shadow-lg">
               {isMounted ? String(value).padStart(2, "0") : "--"}
             </div>
-            {/* 標籤文字改為藏青色 (slate-800) */}
-            <div className="text-xs text-slate-800 font-bold mt-2 tracking-widest drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]">
+            {/* 標籤區塊：移除模糊的陰影，改用淺灰色 (gray-400)，並稍微放大字體 */}
+            <div className="text-sm md:text-base text-gray-400 font-medium mt-3 tracking-widest">
               {label}
             </div>
           </div>
-          {/* 分隔符號冒號改為藏青色 (slate-800) */}
+          {/* 分隔符號：移除陰影，改為帶有透明度的白色 (white/30)，並調整對齊高度 */}
           {i < 3 && (
-            <span className="text-slate-800 text-3xl font-bold -mt-5 drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]">
+            <span className="text-white/30 text-4xl md:text-6xl font-bold -mt-8">
               :
             </span>
           )}

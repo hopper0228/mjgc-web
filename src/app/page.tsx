@@ -1,5 +1,6 @@
 import Navbar from "@/modules/guitar-club/navbar";
 import Hero from "@/modules/guitar-club/hero";
+import EventInfo from "@/modules/guitar-club/event-info";
 import About from "@/modules/guitar-club/about";
 import Forms from "@/modules/guitar-club/forms";
 import Merchandise from "@/modules/guitar-club/merchandise";
@@ -12,6 +13,7 @@ export default function Home() {
     <main className="bg-[#0a0a0f] min-h-screen">
       <Navbar />
       <Hero />
+      <EventInfo />
       <About />
       <Forms />
       <Merchandise />
