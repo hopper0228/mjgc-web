@@ -15,12 +15,6 @@ const FEATURES = [
     href: "/features/lottery",
   },
   {
-    icon: "🍜",
-    title: "美食饗宴",
-    desc: "精心準備的豐盛佳餚，滿足你的味蕾",
-    href: "/features/food",
-  },
-  {
     icon: "🤝",
     title: "世代相聚",
     desc: "歷屆學長姐學弟妹齊聚，情誼永續",
@@ -44,7 +38,7 @@ export default function About() {
         </p>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
           {FEATURES.map((f) => (
             <Link
               key={f.title}
@@ -94,7 +88,7 @@ export default function About() {
                   <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">
                     活動時間
                   </p>
-                  <p className="text-white font-medium">11:30 入場 / 12:00 活動開始</p>
+                  <p className="text-white font-medium">12:30 入場 / 13:00 活動開始</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
