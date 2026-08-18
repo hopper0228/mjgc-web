@@ -13,6 +13,7 @@
  */
 
 import { google } from "googleapis";
+import { unstable_noStore as noStore } from "next/cache";
 
 function getAuth() {
   return new google.auth.JWT({
@@ -31,6 +32,8 @@ export async function fetchSheetRows(
   spreadsheetId: string,
   range = "A:Z"
 ): Promise<SheetRow[]> {
+  noStore();
+
   if (!spreadsheetId) return [];
 
   const auth = getAuth();
