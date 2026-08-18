@@ -1,6 +1,23 @@
 import FeaturePageLayout from "@/modules/guitar-club/feature-page-layout";
 import { fetchSheetRows, SheetRow } from "@/lib/google-sheets";
 
+const PERFORMANCE_FIELDS = [
+  { label: "團員屆數＋姓名", token: "團員屆數+姓名" },
+  { label: "曲目", token: "表演曲目" },
+] as const;
+
+function normalizeHeader(header: string) {
+  return header.replace(/\s+/g, "");
+}
+
+function getFieldValue(row: SheetRow, token: string) {
+  const entry = Object.entries(row).find(
+    ([header, value]) => value && normalizeHeader(header).includes(token)
+  );
+
+  return entry?.[1] ?? "";
+}
+
 async function getPerformances(): Promise<SheetRow[]> {
   return fetchSheetRows(process.env.PERFORMANCE_FORM_SHEET_ID ?? "");
 }
@@ -12,7 +29,6 @@ export default async function PerformancePage() {
     !!process.env.PERFORMANCE_FORM_SHEET_ID;
 
   const rows = isConfigured ? await getPerformances() : [];
-  const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
 
   return (
     <FeaturePageLayout
@@ -76,14 +92,16 @@ export default async function PerformancePage() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-                    {headers.map((h) =>
-                      row[h] ? (
-                        <div key={h}>
-                          <span className="text-gray-500 text-xs">{h}：</span>
-                          <span className="text-gray-200 text-sm">{row[h]}</span>
+                    {PERFORMANCE_FIELDS.map(({ label, token }) => {
+                      const value = getFieldValue(row, token);
+
+                      return value ? (
+                        <div key={token}>
+                          <span className="text-gray-500 text-xs">{label}：</span>
+                          <span className="text-gray-200 text-sm">{value}</span>
                         </div>
-                      ) : null
-                    )}
+                      ) : null;
+                    })}
                   </div>
                 </div>
               ))}
